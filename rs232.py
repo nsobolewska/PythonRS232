@@ -215,7 +215,6 @@ class childWindowreciv(QDialog):
         count = 0
         countLetter = 0
         carry = (len(Window.binary_list)-3)%10
-        divid = (len(Window.binary_list) - 3) / 10
         ascicode = []
         code = 0
         power = 7
@@ -229,9 +228,10 @@ class childWindowreciv(QDialog):
                     print("Pierwszy for pierwszy if")
                     if countLetter>0 and countLetter<8:
                         print("Pierwszy for pierwszy if pierwszy if")
-                        code = code +( i * 2**power)
+                        print(i)
+                        code = code +(i * 2**power)
                         print("potega",power)
-                    if countLetter == 9:
+                    if countLetter == 10:
                         print("Pierwszy for pierwszy if drugi if")
                         countLetter = 0
                         ascicode.append(code)
