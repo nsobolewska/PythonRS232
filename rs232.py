@@ -109,6 +109,9 @@ class childWindow(QDialog):
         self.btn2.move(250, 180)
 
     def on_click0(self):
+        Window.binary_list = []
+        Window.listOfWords = []
+        self.textedit2.setText("")
         self.nowy = self.textedit.toPlainText()
         print(self.nowy)
         # split the text
@@ -120,12 +123,16 @@ class childWindow(QDialog):
             Window.listOfWords.append(word)
             print(word)
         self.asciToBinary()
+        # Window.listOfWords = []
+        # Window.binary_list = []
+        # self.textedit2.setText(self.nowy)
 
     def on_click1(self):
         Window.binary_list = []
         Window.listOfWords = []
         self.nowy = ""
         self.textedit.setText(self.nowy)
+        self.textedit2.setText(self.nowy)
 
     def asciToBinary(self):
         Window.binary_list.append(1)
