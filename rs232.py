@@ -15,6 +15,7 @@ class Window(QMainWindow):
         self.gridLayout = QGridLayout()
         self.okno.setLayout(self.mainLayout)
         self.setWindowTitle("Menu")
+        self.app_open = False
         self.buttons()
         self.show()
 
@@ -35,7 +36,12 @@ class Window(QMainWindow):
         self.btn2.move(50, 290)
 
     def on_click0(self):
-        self.app = childWindow()
+        if not self.app_open:
+            self.app = childWindow()
+            self.app_open = True
+        else:
+            self.app.close_window()
+            self.app_open = False
         #sys.exit(self.app.exec())
     def on_click1(self):
         print("to odbiornik")
@@ -114,6 +120,9 @@ class childWindow(QDialog):
             self.nowy = (str)(event.key())
             self.text.setText(self.nowy)
             print(event.key())
+
+    def close_window(self):
+        self.destroy()
 
 
 def run():
