@@ -50,6 +50,7 @@ class Window(QMainWindow):
             pass
 
 class childWindow(QDialog):
+    nowy = " "
     def __init__(self):
         super(childWindow, self).__init__()
         self.setGeometry(200, 300, 500, 500)
@@ -110,7 +111,8 @@ class childWindow(QDialog):
 
     def keyPressEvent(self, event):
         if type(event) == QtGui.QKeyEvent:
-            self.text.setText(event.key())
+            self.nowy = (str)(event.key())
+            self.text.setText(self.nowy)
             print(event.key())
 
 
