@@ -128,6 +128,7 @@ class childWindow(QDialog):
         # self.nowy.split_line()
 
     def on_click1(self):
+        Window.binary_list = []
         Window.listOfWords = ""
         self.nowy = ""
         self.textedit.setText(self.nowy)
@@ -223,6 +224,8 @@ class childWindowreciv(QDialog):
         for i in range(len(Window.listOfWords)):
             nowy = nowy+Window.listOfWords[i]+" "
         self.textedit.setText(nowy)
+
+
 
     def close(self):
         choice = QMessageBox.question(self, 'Extract', "Are you sure you want to quit?",
