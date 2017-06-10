@@ -7,6 +7,7 @@ from PyQt5.QtCore import pyqtSlot, Qt
 class Window(QMainWindow):
     listOfWords = []
     binary_list = []
+    grube = ["kurde","pierdole","cholera","debil"]
     def __init__(self):
         super(Window, self).__init__()
         self.setGeometry(700, 300, 500, 500)
@@ -137,10 +138,22 @@ class childWindow(QDialog):
     def asciToBinary(self):
         Window.binary_list.append(1)
         for i in range(len(Window.listOfWords)):
+            for n in range(len(Window.grube)):
+                if Window.listOfWords[i] == Window.grube[n]:
+                    tekst = ""
+                    for let in Window.listOfWords[i]:
+                        tekst = tekst + "*"
+                    Window.listOfWords[i] = tekst
+
             for letter in Window.listOfWords[i]:
                 licz = 0
                 # print(bin(ord(letter)))
                 Window.binary_list.append(1)
+                print("ilosc bitow",len(bin(ord(letter))))
+                if len(bin(ord(letter)))<9:
+                    ile = 9 - len(bin(ord(letter)))
+                    for w in range(ile):
+                        Window.binary_list.append(0)
                 for k in bin(ord(letter)):
                     if licz>1:
                         Window.binary_list.append((int)(k))
