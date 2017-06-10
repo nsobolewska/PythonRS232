@@ -129,7 +129,7 @@ class childWindow(QDialog):
 
     def on_click1(self):
         Window.binary_list = []
-        Window.listOfWords = ""
+        Window.listOfWords = []
         self.nowy = ""
         self.textedit.setText(self.nowy)
 
@@ -146,6 +146,15 @@ class childWindow(QDialog):
                     licz = licz + 1
                 Window.binary_list.append(1)
                 Window.binary_list.append(1)
+            licz = 0
+            Window.binary_list.append(1)
+            for k in bin(32):
+                if licz>1:
+                    Window.binary_list.append((int)(k))
+                licz = licz + 1
+            Window.binary_list.append(1)
+            Window.binary_list.append(1)
+
         Window.binary_list.append(1)
         Window.binary_list.append(1)
         self.binaryText = ""
