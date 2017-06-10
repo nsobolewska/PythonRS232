@@ -107,7 +107,7 @@ class childWindow(QDialog):
 
         if choice == QMessageBox.Yes:
             print("Zamykamy sie")
-            sys.exit(self.exec())
+            self.destroy()
         else:
             pass
 
