@@ -144,14 +144,18 @@ class childWindow(QDialog):
                     if licz>1:
                         Window.binary_list.append((int)(k))
                     licz = licz + 1
+                print(licz)
                 Window.binary_list.append(1)
                 Window.binary_list.append(1)
             licz = 0
             Window.binary_list.append(1)
+            Window.binary_list.append(0)
             for k in bin(32):
                 if licz>1:
+                    print("*")
                     Window.binary_list.append((int)(k))
                 licz = licz + 1
+            print(licz)
             Window.binary_list.append(1)
             Window.binary_list.append(1)
 
@@ -161,7 +165,7 @@ class childWindow(QDialog):
         for i in Window.binary_list:
             self.binaryText = self.binaryText + (str)(i)
         self.textedit2.setText(self.binaryText)
-        print(Window.binary_list)
+        print(len(Window.binary_list))
 
     def close(self):
         choice = QMessageBox.question(self, 'Extract', "Are you sure you want to quit?",
@@ -218,23 +222,20 @@ class childWindowreciv(QDialog):
         self.btn2.move(250, 290)
 
     def on_click0(self):
-        # self.nowy = self.textedit.toPlainText()
-        # print(self.nowy)
-        # # split the text
-        # words = self.nowy.split()
-        #
-        # # for each word in the line:
-        # for word in words:
-        #     # print the word
-        #     Window.listOfWords.append(word)
-        #     print(word)
-        # # self.nowy.split_line()
-        nowy = ""
-        for i in range(len(Window.listOfWords)):
-            nowy = nowy+Window.listOfWords[i]+" "
-        self.textedit.setText(nowy)
-
-
+        count = 0
+        carry = (len(Window.binary_list)-3)%10
+        if carry!=0:
+            print(carry)
+            self.textedit.setText("Blad transmisji- zgubiono bity")
+        else:
+            for i in Window.binary_list:
+                if count>0 and count<(len(Window.binary_list)-2):
+                    print(count)
+                count+=1
+            nowy = ""
+            for i in range(len(Window.listOfWords)):
+                nowy = nowy+Window.listOfWords[i]+" "
+            self.textedit.setText(nowy)
 
     def close(self):
         choice = QMessageBox.question(self, 'Extract', "Are you sure you want to quit?",
