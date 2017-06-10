@@ -6,6 +6,7 @@ from PyQt5.QtCore import pyqtSlot, Qt
 
 class Window(QMainWindow):
     listOfWords = []
+    binary_list = []
     def __init__(self):
         super(Window, self).__init__()
         self.setGeometry(700, 300, 500, 500)
@@ -89,6 +90,10 @@ class childWindow(QDialog):
         self.textedit.move(50, 50)
         self.textedit.setFont(QtGui.QFont('SansSerif', 9))
         self.textedit.resize(400, 100)
+        self.textedit2 = QTextEdit("Tu bedzie kod binarny", self)
+        self.textedit2.move(50, 250)
+        self.textedit2.setFont(QtGui.QFont('SansSerif', 9))
+        self.textedit2.resize(400, 100)
 
         self.show()
 
@@ -96,17 +101,17 @@ class childWindow(QDialog):
         self.btn0 = QPushButton('Nadaj', self)
         self.btn0.clicked.connect(self.on_click0)
         self.btn0.resize(80, 50)
-        self.btn0.move(50, 290)
+        self.btn0.move(50, 180)
 
         self.btn1 = QPushButton('Czysc', self)
         self.btn1.clicked.connect(self.on_click1)
         self.btn1.resize(80, 50)
-        self.btn1.move(150, 290)
+        self.btn1.move(150, 180)
 
         self.btn2 = QPushButton('Zakoncz', self)
         self.btn2.clicked.connect(self.close)
         self.btn2.resize(80, 50)
-        self.btn2.move(250, 290)
+        self.btn2.move(250, 180)
 
     def on_click0(self):
         self.nowy = self.textedit.toPlainText()
@@ -119,11 +124,34 @@ class childWindow(QDialog):
             # print the word
             Window.listOfWords.append(word)
             print(word)
+        self.asciToBinary()
         # self.nowy.split_line()
 
     def on_click1(self):
+        Window.listOfWords = ""
         self.nowy = ""
         self.textedit.setText(self.nowy)
+
+    def asciToBinary(self):
+        Window.binary_list.append(1)
+        for i in range(len(Window.listOfWords)):
+            for letter in Window.listOfWords[i]:
+                licz = 0
+                # print(bin(ord(letter)))
+                Window.binary_list.append(1)
+                for k in bin(ord(letter)):
+                    if licz>1:
+                        Window.binary_list.append((int)(k))
+                    licz = licz + 1
+                Window.binary_list.append(1)
+                Window.binary_list.append(1)
+        Window.binary_list.append(1)
+        Window.binary_list.append(1)
+        self.binaryText = ""
+        for i in Window.binary_list:
+            self.binaryText = self.binaryText + (str)(i)
+        self.textedit2.setText(self.binaryText)
+        print(Window.binary_list)
 
     def close(self):
         choice = QMessageBox.question(self, 'Extract', "Are you sure you want to quit?",
@@ -195,7 +223,6 @@ class childWindowreciv(QDialog):
         for i in range(len(Window.listOfWords)):
             nowy = nowy+Window.listOfWords[i]+" "
         self.textedit.setText(nowy)
-
 
     def close(self):
         choice = QMessageBox.question(self, 'Extract', "Are you sure you want to quit?",
