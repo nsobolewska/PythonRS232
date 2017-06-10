@@ -75,11 +75,6 @@ class childWindow(QDialog):
         self.setGeometry(200, 300, 500, 500)
         self.okno = QWidget(self)
         self.parent = parent
-        # self.setCentralWidget(self.okno)
-        # self.mainLayout = QVBoxLayout()
-        # self.mainLayout.setGeometry(100,100,300,300)
-        # self.gridLayout = QGridLayout()
-        # self.okno.setLayout(self.mainLayout)
         self.setWindowTitle("Nadajnik")
         self.buttons()
         self.textbox()
@@ -125,7 +120,6 @@ class childWindow(QDialog):
             Window.listOfWords.append(word)
             print(word)
         self.asciToBinary()
-        # self.nowy.split_line()
 
     def on_click1(self):
         Window.binary_list = []
@@ -192,11 +186,6 @@ class childWindowreciv(QDialog):
         self.setGeometry(900, 300, 500, 500)
         self.okno = QWidget(self)
         self.parent = parent
-        # self.setCentralWidget(self.okno)
-        # self.mainLayout = QVBoxLayout()
-        # self.mainLayout.setGeometry(100,100,300,300)
-        # self.gridLayout = QGridLayout()
-        # self.okno.setLayout(self.mainLayout)
         self.setWindowTitle("Odbiornik")
         self.buttons()
         self.textbox()
@@ -222,19 +211,42 @@ class childWindowreciv(QDialog):
         self.btn2.move(250, 290)
 
     def on_click0(self):
+
         count = 0
+        countLetter = 0
         carry = (len(Window.binary_list)-3)%10
+        divid = (len(Window.binary_list) - 3) / 10
+        ascicode = []
+        code = 0
+        power = 7
         if carry!=0:
             print(carry)
             self.textedit.setText("Blad transmisji- zgubiono bity")
         else:
             for i in Window.binary_list:
+                print("Pierwszy for")
                 if count>0 and count<(len(Window.binary_list)-2):
-                    print(count)
+                    print("Pierwszy for pierwszy if")
+                    if countLetter>0 and countLetter<8:
+                        print("Pierwszy for pierwszy if pierwszy if")
+                        code = code +( i * 2**power)
+                        print("potega",power)
+                    if countLetter == 9:
+                        print("Pierwszy for pierwszy if drugi if")
+                        countLetter = 0
+                        ascicode.append(code)
+                        code = 0
+                        power = 7
+                    countLetter+=1
+                    power-=1
                 count+=1
             nowy = ""
-            for i in range(len(Window.listOfWords)):
-                nowy = nowy+Window.listOfWords[i]+" "
+            for let in ascicode:
+                print("Drugi for")
+                print(let)
+                nowy = nowy + chr(let)
+            # for i in range(len(Window.listOfWords)):
+            #     nowy = nowy+Window.listOfWords[i]+" "
             self.textedit.setText(nowy)
 
     def close(self):
