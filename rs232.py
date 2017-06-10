@@ -37,7 +37,7 @@ class Window(QMainWindow):
 
     def on_click0(self):
         if not self.app_open:
-            self.app = childWindow()
+            self.app = childWindow(self)
             self.app_open = True
         else:
             self.app.close_window()
@@ -54,13 +54,17 @@ class Window(QMainWindow):
             sys.exit()
         else:
             pass
+    def closeEvent(self, QCloseEvent):
+        QCloseEvent.ignore()
+        self.close()
 
 class childWindow(QDialog):
     nowy = " "
-    def __init__(self):
+    def __init__(self, parent = None):
         super(childWindow, self).__init__()
         self.setGeometry(200, 300, 500, 500)
         self.okno = QWidget(self)
+        self.parent = parent
         # self.setCentralWidget(self.okno)
         self.mainLayout = QVBoxLayout()
         # self.mainLayout.setGeometry(100,100,300,300)
@@ -72,11 +76,16 @@ class childWindow(QDialog):
         self.show()
 
     def textbox(self):
-        self.text = QLabel("Wpisz tekst z klawiatury",self)
-        # self.text.setText("Wpisz tekst z klawiatury")
-        self.text.move(50,50)
-        self.text.setFont(QtGui.QFont('SansSerif', 15))
-        self.text.resize(self.text.minimumSizeHint())
+        self.textedit = QTextEdit("Wpisz tekst z klawiatury",self)
+        self.textedit.move(50, 50)
+        self.textedit.setFont(QtGui.QFont('SansSerif', 9))
+        self.textedit.resize(400, 100)
+
+        # self.text = QLabel("Wpisz tekst z klawiatury",self)
+        # # self.text.setText("Wpisz tekst z klawiatury")
+        # self.text.move(50,50)
+        # self.text.setFont(QtGui.QFont('SansSerif', 15))
+        # self.text.resize(400,100)
         self.show()
 
     def buttons(self):
@@ -96,10 +105,30 @@ class childWindow(QDialog):
         self.btn2.move(250, 290)
 
     def on_click0(self):
-        print("Tu bedzie przesylanie")
+        self.nowy = self.textedit.toPlainText()
+        print(self.nowy)
+        # split the text
+        words = self.nowy.split()
+
+        # for each word in the line:
+        for word in words:
+            # print the word
+            print(word)
+        # self.nowy.split_line()
+
+    def split_line(text):
+        # # split the text
+        # words = line.split()
+        #
+        # # for each word in the line:
+        # for word in words:
+        #     # print the word
+        #     print(word)
+        print(text)
 
     def on_click1(self):
-        print("to bedzie czyszczenie textboxa")
+        self.nowy = ""
+        self.textedit.setText(self.nowy)
 
     def close(self):
         choice = QMessageBox.question(self, 'Extract', "Are you sure you want to quit?",
@@ -108,6 +137,7 @@ class childWindow(QDialog):
         if choice == QMessageBox.Yes:
             print("Zamykamy sie")
             self.destroy()
+            self.parent.app_open = False
         else:
             pass
 
@@ -115,11 +145,12 @@ class childWindow(QDialog):
         QCloseEvent.ignore()
         self.close()
 
-    def keyPressEvent(self, event):
-        if type(event) == QtGui.QKeyEvent:
-            self.nowy = (str)(event.key())
-            self.text.setText(self.nowy)
-            print(event.key())
+    # def keyPressEvent(self, event):
+    #     if type(event) == QtGui.QKeyEvent:
+    #         asci = event.key()
+    #         self.nowy = self.nowy+chr(asci)
+    #         self.textedit.setText(self.nowy)
+    #         print(event.key())
 
     def close_window(self):
         self.destroy()
